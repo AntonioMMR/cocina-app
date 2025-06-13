@@ -1,23 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import Home from '@/pages/Home.vue'
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+export default createRouter({
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
-    },
-  ],
+      component: DefaultLayout,
+      children: [
+        { path: '', component: Home },
+        { path: 'proveedores', component: () => import('@/pages/Proveedores.vue') },
+        { path: 'pedidos/hacer', component: () => import('@/pages/Pedidos/HacerPedido.vue') },
+        { path: 'pedidos/historial', component: () => import('@/pages/Pedidos/HistorialPedidos.vue') },
+        { path: 'horarios/crear', component: () => import('@/pages/Horarios/CrearHorario.vue') },
+        { path: 'horarios/ver', component: () => import('@/pages/Horarios/VerHorarios.vue') },
+        { path: 'horarios/vacaciones', component: () => import('@/pages/Horarios/Vacaciones.vue') },
+        { path: 'inventarios/crear', component: () => import('@/pages/Inventarios/CrearInventario.vue') },
+        { path: 'inventarios/historial', component: () => import('@/pages/Inventarios/HistorialInventarios.vue') },
+      ]
+    }
+  ]
 })
-
-export default router
